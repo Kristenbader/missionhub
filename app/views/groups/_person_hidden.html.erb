@@ -1,4 +1,4 @@
-<tr id="<%= dom_id(person) %>" class="person_row" data-name="<%= person.name %>" data-email="<%= person.email %>" data-id="<%= person.id %>" style="display:none;">
+<tr class="person_row" data-name="<%= person.name %>" data-email="<%= person.email %>" data-id="<%= person.id %>" style="display:none;">
   <td nowrap="nowrap" class="checkbox_cell">
     <%= check_box_tag 'ids[]', person.id, false, id: "ids_#{person.id}", class: "id_checkbox id_group_#{group_id}" %>
   </td>
