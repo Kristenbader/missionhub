@@ -288,7 +288,14 @@ $.fn.submitBulkSendDialog = ->
   $('#bulk_send_dialog form #to').val(ids.join(','))
   $.rails.handleRemote($("#bulk_send_dialog form"))
   $('#bulk_send_dialog').dialog('destroy')
-        
+
+$('.id_checkbox_group').live 'click', ->
+  if $(this).is(':checked')
+    $('.'+$(this).attr('id')).attr('checked', true)
+  else
+    $('.'+$(this).attr('id')).attr('checked', false)
+  toggle_contacts_control()
+
 $('#send_bulkemail_link').live 'click', -> 
   if $('.id_checkbox:checked').length == 0
     alert("You didn't select any people to email")
@@ -584,6 +591,16 @@ $('.check_all_contacts').live 'click', ->
     else
       first_row.remove()
   
+$('#check_all_groups').live 'click', ->
+  if $(this).is(':checked')  
+    $('.id_checkbox_group').attr('checked', true)
+  else
+    $('.id_checkbox_group').attr('checked', false)
+  $('.id_checkbox').attr('checked', false)
+  $('.id_checkbox_group:checked').each ->
+    $('.'+$(this).attr('id')).attr('checked', true)
+  toggle_contacts_control()
+  
 $('#check_all').live 'click', ->
   first_row = $('#people_table').find('tr:first')
   text = first_row.text()
@@ -765,5 +782,11 @@ update_persons_roles = () ->
       #    $("#apply_roles_spinner").hide()
       #    $("#apply_roles_successful").show()
       #    $("#apply_roles_successful").html("Roles have been applied.")
+  
+toggle_contacts_control = ->
+  if $(".id_checkbox").is(":checked")
+    $(".control_toggle").show()
+  else
+    $(".control_toggle").hide()
 
   

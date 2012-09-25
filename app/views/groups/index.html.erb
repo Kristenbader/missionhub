@@ -29,6 +29,9 @@
     </div>
 <% end %>
 
+<%= render 'shared/bulk_vcard_dialog' %>  
+<%= render 'shared/bulk_send_form' %>
+
 <% if @label %>
   <div class="controlbar">
     <%= link_to(t('groups.see_all'), '/groups', :class=>"backto") %>
@@ -49,6 +52,15 @@
       <%= link_to(t('.add_group'), new_group_path) %>
     </li>
   </ul>
+  <ul class="pillmenu control_toggle">
+    <li>
+      <%= link_to('Send', '#', class: 'action_dropdown') %>
+      <ul style="display:none">
+        <li><%= link_to(t('people.index.send_email'), nil, :id => "send_bulkemail_link") %></li>	
+        <li><%= link_to(t('people.index.send_sms'), nil, :id => "send_bulksms_link") %></li>	
+      </ul>
+    </li>    		
+  </ul>
 </div>
 
 <span style="display:none" id="drag_helper_text_one"><%= t('.assign_to_label', count: 1) %></span>
@@ -57,7 +69,7 @@
   <thead>
     <tr>
       <th class="checkbox_cell">
-        <%= check_box_tag 'check_all', true, false %>
+        <%= check_box_tag 'check_all_groups', true, false %>
       </th>
       <th class="groupname"><%= sort_link @q, :name, t('.group_name'), params %></th>
       <th></th>
@@ -74,8 +86,7 @@
       <% group_p = Present(group) %>
       <tr data-id="<%= group.id %>">
         <td nowrap="nowrap" class="checkbox_cell">
-          <%= image_tag('grippy.png', class: 'handle' ) %>
-          <%= check_box_tag 'ids[]', group.id, false, id: "ids_#{group.id}", class: 'id_checkbox' %>
+          <%= check_box_tag 'ids[]', group.id, false, id: "id_group_#{group.id}", class: 'id_checkbox_group' %>
         </td>
         <td><%= link_to(group.name, group) %></td>
         <td><% if !group.list_publicly %><%= image_tag('lock.gif', class: 'privategroup' ) %><% end %></td>
@@ -86,6 +97,9 @@
            <%= link_to("Show", group_path(group), :class => "icon magnify") %>
         </td>
       </tr>
+      <% group.group_memberships.involved.order('role').includes(:person).each do |group_member| %>
+        <%= render 'person_hidden', person: group_member.person, group_membership: group_member, group_id: group.id %>
+      <% end %>
     <% end %>
   </tbody>
   <tfoot>
