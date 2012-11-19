@@ -11,6 +11,7 @@ class ImportsController < ApplicationController
 
   def new
     @import = Import.new
+    render layout: 'import'
   end
 
   def create
@@ -21,23 +22,25 @@ class ImportsController < ApplicationController
         redirect_to edit_import_path(@import)
       else
         init_org
-        render :new
+        render :new, :layout => 'import' 
       end      
     rescue ArgumentError
       flash.now[:error] = t('imports.new.wrong_file_format_error')
       init_org
       @import = Import.new
-      render :new
+      render :new, :layout => 'import'
     end
   end
 
   def edit
     get_survey_questions
+    render layout: 'import'
   end
   
   def labels
     @import_count =  @import.get_new_people.count
     @roles = current_organization.roles
+    render layout: 'import'
   end
 
   def update
@@ -47,7 +50,7 @@ class ImportsController < ApplicationController
     if errors.present?
       flash.now[:error] = errors.join('<br />').html_safe
       init_org
-      render :new
+      render :new, :layout => 'import'
     else
       redirect_to :action => :labels
     end
@@ -87,6 +90,19 @@ class ImportsController < ApplicationController
     init_org
     flash.now[:error] = t('contacts.import_contacts.blank_header')
     render :new
+  end
+  
+  def create_survey_question
+    @success = false
+    @message ||= "Enter new survey name." if params[:create_survey_toggle] == "new_survey" && !params[:survey_name_field].present?
+    @message ||= "Select an existing survey." if params[:create_survey_toggle].blank? && !params[:select_survey_field].present?
+    @message ||= "Select question type." unless params[:question_category].present?
+    @message ||= "Question can't be blank" unless params[:question].present?
+    @message ||= "Choices can't be blank " if params[:question_category] == 'ChoiceField' && !params[:options].present?
+    
+    unless @message.present?
+      @message = 'This feature is under development.'
+    end
   end
 
   protected
