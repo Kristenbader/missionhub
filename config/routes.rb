@@ -124,6 +124,8 @@ Mh::Application.routes.draw do
       post :archive_contacts
       post :archive_leaders
       post :create_from_crs
+      get :api
+      get :generate_api_secret
     end
   end
 
@@ -212,8 +214,9 @@ Mh::Application.routes.draw do
   namespace :apis do
     api_version(module: "V3", header: "API-VERSION", value: "v3", parameter: "version", path: 'v3') do
       resources :people
-      resources :surveys
       resources :organizations
+      resources :surveys
+      resources :roles
     end
   end
 
@@ -241,7 +244,6 @@ Mh::Application.routes.draw do
   #
   match 'autoassign_suggest' => 'surveys/questions#suggestion', as: 'question_suggestion'
   
-  #get "welcome/tour"
   match "welcome/tour" => 'welcome#tutorials'
 
   # mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
