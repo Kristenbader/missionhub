@@ -4,6 +4,9 @@
 
 en:
   application:
+    survey:
+      default_login_paragraph: "To start the survey, please login with Facebook so we can know who you really are. This will save time completing your survey."
+      default_post_survey_message: "Thank you fro your time!"
     add_contact: 
       add_contact: Add a contact to %{org}
       title_bio: Bio
@@ -86,6 +89,7 @@ en:
     settings: Settings
     cru: "Cru"
   general:
+    transfer: "Transfer"
     roles_applied: "Labels have been applied."
     adv_search: "Advanced Search"
     archived: "Archived"
@@ -644,7 +648,7 @@ en:
       dnc_contacts: "All Contacts - 'Do Not Contact'"
       completed_contacts: "All Contacts - Completed"
       friend_responses: "Contacts who are also my friends on Facebook"
-      none_checked: "Sorry, you need to select a Contact before this function will work."
+      none_checked: "You need to select a person before this feature will work."
       show_all: Show 'In Progress' contacts
       matching_seach: Matching the criteria you searched for
       which_org: 'You need to choose which organization you want to do folow-up from'
@@ -739,7 +743,7 @@ en:
       cause_3: " Invalid email address at row/s"
       tip_2: "In your first row list the headings like it shows here: <strong>FIRST NAME, LAST NAME, STATUS, GENDER, EMAIL, PHONE NUMBER, ADDRESS 1, ADDRESS 2, CITY, STATE, COUNTRY, ZIP</strong>"
       blank_header: "One of the CSV headers is blank"
-      present_firstname: "First name is required on import"
+      present_first_name: "First name is required on import"
       duplicate_header_match: "At least two of the headers has the same selected person attribute/survey question"
       
   sms:
