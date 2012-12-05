@@ -3,7 +3,7 @@ class PersonSerializer < ActiveModel::Serializer
            :followup_comments, :organizational_roles, :rejoicables]
 
   attributes :id, :first_name, :last_name, :gender, :campus, :year_in_school, :major, :minor, :birth_date,
-             :date_became_christian, :graduation_date, :user_id, :fb_uid, :updated_at, :created_at
+             :date_became_christian, :graduation_date, :user_id, :fb_uid, :created_at, :updated_at
 
   has_many *INCLUDES
 
